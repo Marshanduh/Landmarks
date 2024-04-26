@@ -7,21 +7,25 @@ The elevation, heart rate, and pace of a hike plotted on a graph.
 
 import SwiftUI
 
-
+// Menggunakan extension tipe Animation untuk menyediakan animasi ripple kustom
 extension Animation {
     static func ripple(index: Int) -> Animation {
+        // Tentukan animasi spring dengan fraksi redaman 0.5
+        // Atur kecepatan animasi menjadi 2
+        // Menambahkan efek delay berdasarkan indeks untuk membuat efek stagger
         Animation.spring(dampingFraction: 0.5)
             .speed(2)
             .delay(0.03 * Double(index))
     }
 }
 
-
+// Definisikan tampilan SwiftUI untuk menampilkan grafik dari sebuah hiking
 struct HikeGraph: View {
-    var hike: Hike
-    var path: KeyPath<Hike.Observation, Range<Double>>
+    var hike: Hike // Model data hiking
+    var path: KeyPath<Hike.Observation, Range<Double>>// KeyPath untuk menentukan data yang akan digrafikkan
 
 
+    // Hitung warna berdasarkan tipe data yang digrafikkan
     var color: Color {
         switch path {
         case \.elevation:
@@ -37,14 +41,16 @@ struct HikeGraph: View {
 
 
     var body: some View {
-        let data = hike.observations
-        let overallRange = rangeOfRanges(data.lazy.map { $0[keyPath: path] })
-        let maxMagnitude = data.map { magnitude(of: $0[keyPath: path]) }.max()!
-        let heightRatio = 1 - CGFloat(maxMagnitude / magnitude(of: overallRange))
+        let data = hike.observations // Dapatkan data pengamatan hiking
+        let overallRange = rangeOfRanges(data.lazy.map { $0[keyPath: path] })// Hitung rentang keseluruhan dari data yang digrafikka
+        let maxMagnitude = data.map { magnitude(of: $0[keyPath: path]) }.max()! // Hitung magnitudo maksimum dari data yang digrafikkan
+        let heightRatio = 1 - CGFloat(maxMagnitude / magnitude(of: overallRange)) // Hitung rasio tinggi untuk data yang digrafikkan
 
 
+        // Buat sebuah GeometryReader untuk mengakses ukuran kontainer
         return GeometryReader { proxy in
             HStack(alignment: .bottom, spacing: proxy.size.width / 120) {
+                // Iterasi melalui pengamatan hiking untuk membuat kapsul grafik
                 ForEach(Array(data.enumerated()), id: \.offset) { index, observation in
                     GraphCapsule(
                         index: index,
@@ -53,14 +59,17 @@ struct HikeGraph: View {
                         range: observation[keyPath: path],
                         overallRange: overallRange
                     )
+                    // Terapkan animasi ripple pada setiap kapsul grafik
                     .animation(.ripple(index: index))
                 }
+                // Geser kapsul grafik secara vertikal berdasarkan rasio tinggi
                 .offset(x: 0, y: proxy.size.height * heightRatio)
             }
         }
     }
 }
 
+// Fungsi untuk menghitung rentang dari rentang-rentang
 func rangeOfRanges<C: Collection>(_ ranges: C) -> Range<Double>
     where C.Element == Range<Double> {
     guard !ranges.isEmpty else { return 0..<0 }
@@ -69,10 +78,12 @@ func rangeOfRanges<C: Collection>(_ ranges: C) -> Range<Double>
     return low..<high
 }
 
+// Fungsi untuk menghitung magnitudo dari sebuah rentang
 func magnitude(of range: Range<Double>) -> Double {
     range.upperBound - range.lowerBound
 }
 
+// Pratinjau tampilan HikeGraph dengan data hiking contoh untuk berbagai tipe data
 #Preview {
     let hike = ModelData().hikes[0]
     return Group {

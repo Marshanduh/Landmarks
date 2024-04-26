@@ -7,17 +7,17 @@
 
 import Foundation
 
-
+// Definisikan struktur Profile untuk menyimpan profil pengguna
 struct Profile {
-    var username: String
-    var prefersNotifications = true
-    var seasonalPhoto = Season.winter
-    var goalDate = Date()
+    var username: String // Nama pengguna
+    var prefersNotifications = true // Preferensi notifikasi pengguna (default true)
+    var seasonalPhoto = Season.winter // Foto musiman pengguna (default winter)
+    var goalDate = Date() // Tanggal target pengguna (default saat ini)
 
-
+    // Profil pengguna default dengan username "g_kumar"
     static let `default` = Profile(username: "g_kumar")
 
-
+    // Enum untuk merepresentasikan musim dengan emoji dan menyediakan ID Identifiable
     enum Season: String, CaseIterable, Identifiable {
         case spring = "🌷"
         case summer = "🌞"
@@ -25,6 +25,6 @@ struct Profile {
         case winter = "☃️"
 
 
-        var id: String { rawValue }
+        var id: String { rawValue } // ID Identifiable adalah nilai raw dari kasus enum
     }
 }

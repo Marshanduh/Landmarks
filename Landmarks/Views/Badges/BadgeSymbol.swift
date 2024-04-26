@@ -9,7 +9,7 @@ import SwiftUI
 
 
 struct BadgeSymbol: View {
-    
+    //warna ungu unguk simbol badge
     //purple color
     static let symbolColor = Color(red: 79.0 / 255, green: 79.0 / 255, blue: 191.0 / 255)
 
@@ -43,12 +43,12 @@ struct BadgeSymbol: View {
                     CGPoint(x: middle, y: topHeight / 2 + spacing * 3)
                 ])
             }
-            .fill(Self.symbolColor)
+            .fill(Self.symbolColor) // Mengisi simbol dengan warna ungu
         }
     }
 }
 
-
+// Tampilan Badge Symbol
 #Preview {
     BadgeSymbol()
 }

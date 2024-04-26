@@ -7,12 +7,30 @@
 
 import SwiftUI
 
-struct LandmarkSetting: View {
+// Definisikan tampilan LandmarkSettings
+struct LandmarkSettings: View {
+    @AppStorage("MapView.zoom")
+    // Ambil nilai zoom dari AppStorage untuk pengaturan tampilan peta
+    private var zoom: MapView.Zoom = .medium
+
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        // Tampilkan formulir untuk mengatur zoom peta
+        Form {
+            Picker("Map Zoom:", selection: $zoom) {
+                ForEach(MapView.Zoom.allCases) { level in
+                    Text(level.rawValue)
+                }
+            }
+            .pickerStyle(.inline)
+        }
+        .frame(width: 300) // Atur lebar frame formulir
+        .navigationTitle("Landmark Settings") // Atur judul tampilan
+        .padding(80) // Atur padding di sekitar formulir
     }
 }
 
+// Pratinjau tampilan LandmarkSettings
 #Preview {
-    LandmarkSetting()
+    LandmarkSettings()
 }

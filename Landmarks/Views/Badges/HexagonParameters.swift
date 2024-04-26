@@ -7,18 +7,21 @@
 
 import CoreGraphics
 
-
+// Struktur untuk menyimpan parameter-parameter segmen heksagon.
 struct HexagonParameters {
+    // Struktur untuk mewakili segmen heksagon.
     struct Segment {
-        let line: CGPoint
-        let curve: CGPoint
-        let control: CGPoint
+        let line: CGPoint // Titik untuk garis lurus segmen.
+        let curve: CGPoint // Titik untuk kurva segmen.
+        let control: CGPoint // Titik kontrol untuk kurva segmen.
     }
 
 
+    // Penyesuaian untuk memperbaiki penampilan heksagon.
     static let adjustment: CGFloat = 0.085
 
 
+    // Daftar segmen heksagon.
     static let segments = [
         Segment(
             line:    CGPoint(x: 0.60, y: 0.05),

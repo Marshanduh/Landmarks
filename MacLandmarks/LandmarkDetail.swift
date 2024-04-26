@@ -11,26 +11,28 @@ import SwiftUI
 import SwiftUI
 import MapKit
 
-
+// Definisikan tampilan LandmarkDetail
 struct LandmarkDetail: View {
-    @Environment(ModelData.self) var modelData
-    var landmark: Landmark
+    @Environment(ModelData.self) var modelData // Environment untuk data model
+    var landmark: Landmark // Landmark yang akan ditampilkan detailnya
 
 
+    // Hitung indeks landmark dalam modelData
     var landmarkIndex: Int {
         modelData.landmarks.firstIndex(where: { $0.id == landmark.id })!
     }
 
-
+    
     var body: some View {
-        @Bindable var modelData = modelData
+        @Bindable var modelData = modelData // Binding untuk modelData
         
         ScrollView {
             ZStack(alignment: Alignment(horizontal: .trailing, vertical: .top)) {
+                // Tampilkan peta dengan lokasi landmark
                 MapView(coordinate: landmark.locationCoordinate)
                     .frame(height: 300)
 
-
+                // Tombol untuk membuka lokasi landmark di aplikasi Maps
                 Button("Open in Maps") {
                     let destination = MKMapItem(placemark: MKPlacemark(coordinate: landmark.locationCoordinate))
                     destination.name = landmark.name
@@ -42,20 +44,24 @@ struct LandmarkDetail: View {
 
             VStack(alignment: .leading, spacing: 20) {
                 HStack(spacing: 24) {
+                    // Tampilkan gambar landmark dalam bentuk lingkaran
                     CircleImage(image: landmark.image.resizable())
                         .frame(width: 160, height: 160)
 
 
                     VStack(alignment: .leading) {
                         HStack {
+                            // Tampilkan nama landmark
                             Text(landmark.name)
                                 .font(.title)
+                            // Tombol favorit untuk menandai atau menghapus tanda favorit
                             FavoriteButton(isSet: $modelData.landmarks[landmarkIndex].isFavorite)
                                 .buttonStyle(.plain)
                         }
 
 
                         VStack(alignment: .leading) {
+                            // Tampilkan nama taman dan negara bagian
                             Text(landmark.park)
                             Text(landmark.state)
                         }
@@ -67,7 +73,7 @@ struct LandmarkDetail: View {
 
                 Divider()
 
-
+                // Tampilkan deskripsi tentang landmark
                 Text("About \(landmark.name)")
                     .font(.title2)
                 Text(landmark.description)
@@ -80,7 +86,7 @@ struct LandmarkDetail: View {
     }
 }
 
-
+// Pratinjau tampilan LandmarkDetail dengan menggunakan ModelData environment
 #Preview {
     let modelData = ModelData()
     return LandmarkDetail(landmark: modelData.landmarks[0])

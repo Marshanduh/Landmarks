@@ -18,7 +18,7 @@ struct Landmark: Hashable, Codable, Identifiable {
     var state: String
     var description: String
     var isFavorite: Bool //untuk ketika user ingin menyimpan sebagai favorite
-    var isFeatured: Bool
+    var isFeatured: Bool // Status apakah landmark merupakan fitur utama
 
     var category: Category
     enum Category: String, CaseIterable, Codable {
@@ -33,21 +33,21 @@ struct Landmark: Hashable, Codable, Identifiable {
         Image(imageName)
     }
 
-    var featureImage: Image? {
+    var featureImage: Image? { // Image landmark fitur jika ada
         isFeatured ? Image(imageName + "_feature") : nil
     }
 
-    //attribute map
+    //attribute map untuk koordinat landmark pada peta
     private var coordinates: Coordinates
-    var locationCoordinate: CLLocationCoordinate2D {
+    var locationCoordinate: CLLocationCoordinate2D { // Koordinat landmark
         CLLocationCoordinate2D(
             latitude: coordinates.latitude,
             longitude: coordinates.longitude)
     }
 
-
+    // Definisikan struktur Coordinates untuk merepresentasikan koordinat landmark
     struct Coordinates: Hashable, Codable {
-        var latitude: Double
-        var longitude: Double
+        var latitude: Double // Latitude
+        var longitude: Double // Longitude
     }
 }

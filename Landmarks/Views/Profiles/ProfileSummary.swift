@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-
+// Tampilan untuk menampilkan ringkasan profil pengguna.
 struct ProfileSummary: View {
+    // Lingkungan untuk mengakses data dari ModelData.
     @Environment(ModelData.self) var modelData
+    
+    // Data profil pengguna yang akan ditampilkan.
     var profile: Profile
-
 
     var body: some View {
         ScrollView {
@@ -20,19 +22,16 @@ struct ProfileSummary: View {
                     .bold()
                     .font(.title)
 
-
                 Text("Notifications: \(profile.prefersNotifications ? "On": "Off" )")
                 Text("Seasonal Photos: \(profile.seasonalPhoto.rawValue)")
                 Text("Goal Date: ") + Text(profile.goalDate, style: .date)
 
-
                 Divider()
 
-
+                // Daftar lencana hiking yang telah diselesaikan.
                 VStack(alignment: .leading) {
                     Text("Completed Badges")
                         .font(.headline)
-
 
                     ScrollView(.horizontal) {
                         HStack {
@@ -47,14 +46,12 @@ struct ProfileSummary: View {
                     }
                 }
 
-
                 Divider()
 
-
+                // Daftar hiking terbaru yang telah dilakukan.
                 VStack(alignment: .leading) {
                     Text("Recent Hikes")
                         .font(.headline)
-
 
                     HikeView(hike: modelData.hikes[0])
                 }
@@ -63,8 +60,9 @@ struct ProfileSummary: View {
     }
 }
 
-
+// Preview untuk menampilkan ProfileSummary dengan data profil default.
 #Preview {
     ProfileSummary(profile: Profile.default)
         .environment(ModelData())
 }
+

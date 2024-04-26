@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-
+// Tampilan latar belakang badge dengan bentuk heksagon.
 struct BadgeBackground: View {
     var body: some View {
         GeometryReader { geometry in
@@ -24,7 +24,6 @@ struct BadgeBackground: View {
                     )
                 )
 
-
                 HexagonParameters.segments.forEach { segment in
                     path.addLine(
                         to: CGPoint(
@@ -32,7 +31,6 @@ struct BadgeBackground: View {
                             y: height * segment.line.y
                         )
                     )
-
 
                     path.addQuadCurve(
                         to: CGPoint(
@@ -54,11 +52,14 @@ struct BadgeBackground: View {
         }
         .aspectRatio(1, contentMode: .fit)
     }
+
+    // Warna awal gradien badge.
     static let gradientStart = Color(red: 239.0 / 255, green: 120.0 / 255, blue: 221.0 / 255)
+    // Warna akhir gradien badge.
     static let gradientEnd = Color(red: 239.0 / 255, green: 172.0 / 255, blue: 120.0 / 255)
 }
 
-
+// Preview untuk menampilkan BadgeBackground.
 #Preview {
     BadgeBackground()
 }

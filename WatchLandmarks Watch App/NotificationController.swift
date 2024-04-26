@@ -9,7 +9,9 @@ import WatchKit
 import SwiftUI
 import UserNotifications
 
+//Logics untuk menampilkan notifikasi di watchOS
 
+// Definisikan NotificationController sebagai pengendali notifikasi untuk menampilkan NotificationView
 class NotificationController: WKUserNotificationHostingController<NotificationView> {
     var landmark: Landmark?
     var title: String?
